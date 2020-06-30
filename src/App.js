@@ -10,7 +10,7 @@ class App extends Component {
       food: [
         {
           id: 1,
-          name:"spaghetti"
+          name: "spaghetti"
         },
         {
           id: 2,
@@ -23,7 +23,7 @@ class App extends Component {
         },
         {
           id: 4,
-          name:"pasta"
+          name: "pasta"
         }
       ]
     }
@@ -31,26 +31,27 @@ class App extends Component {
 
   handleInputChange = (event) => {
     const value = event.target.value;
+    const foodNames = this.state.food.filter((item) => {
+      if (item.name[0] === value)
+        return item
+    }).map((item) => {
+      return (
+        <div key={item.id}>
+          <h2>{item.name}</h2>
+        </div>
+      )
+    })
+    console.log(foodNames);
     this.setState({
-      inputField: value
+      inputField: foodNames
     })
 
   }
-
   render() {
-
-    const foodNames = this.state.food.map((item) => {
-      return(
-      <div key={item.id}>
-        <h2>{item.name}</h2>
-      </div>
-      )
-    })
     return (
       <div>
-        <input type="text" id="feild1" name="feild2" value={this.state.inputField} onChange={this.handleInputChange} />
+        <input type="text" id="feild1" name="feild2" onChange={this.handleInputChange} />
         <p>{this.state.inputField}</p>
-        {foodNames}
       </div>
     )
   }
