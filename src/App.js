@@ -6,52 +6,33 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputField: "",
-      food: [
-        {
-          id: 1,
-          name: "spaghetti"
-        },
-        {
-          id: 2,
-          name: "ice cream"
-        }
-        ,
-        {
-          id: 3,
-          name: "sushi"
-        },
-        {
-          id: 4,
-          name: "pasta"
-        }
-      ]
+      userName: "",
+      password: ""
     }
   }
 
   handleInputChange = (event) => {
     const value = event.target.value;
-    const foodNames = this.state.food.filter((item) => {
-      if (item.name[0] === value)
-        return item
-    }).map((item) => {
-      return (
-        <div key={item.id}>
-          <h2>{item.name}</h2>
-        </div>
-      )
-    })
-    console.log(foodNames);
+    const name = event.target.name;
     this.setState({
-      inputField: foodNames
+      [name] : value
     })
-
   }
+
+  handleSubmit = (event) => {
+    console.log(this.state);
+    alert(JSON.stringify(this.state));
+  }
+
+
   render() {
     return (
       <div>
-        <input type="text" id="feild1" name="feild2" onChange={this.handleInputChange} />
-        <p>{this.state.inputField}</p>
+        <label htmlFor="userName">User Name</label>
+        <input type="text" id="userName" name="userName" placeholder="User Name"  onChange = {this.handleInputChange}/>
+        <label htmlFor="password">Password</label>
+        <input type="text" id="password" name="password" placeholder="Password" onChange = {this.handleInputChange}/>
+        <button onClick={this.handleSubmit}>Submit</button>
       </div>
     )
   }
