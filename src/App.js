@@ -4,16 +4,28 @@ import './App.css';
 import Image from './components/ImageComponent';
 import NewTask from './components/NewTask';
 import List from './components/ListComponent';
+import axios from 'axios';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       foodName: [],
-      input: ""
+      input: "",
+      persons:[]
     }
   }
 
+  componentDidMount(){
+    axios.get('https://jsonplaceholder.typicode.com/users')
+    .then(response => {
+      const persons = response.data;  
+      console.log(persons);
+      this.setState({
+        persons:persons
+      })
+    })
+  }
 
   handleInputChange = (event) => {
     const value = event.target.value;
@@ -30,8 +42,16 @@ class App extends Component {
   }
 
   render() {
+    const dataFromApi = this.state.persons.map((person)=>{
+      return(
+        <div key={person.id}>
+            <h5>{person.name} - {person.email}</h5>
+        </div>
+      )
+    })
     return (
       <div>
+        {dataFromApi}
         <h3>My ToDo List:</h3>
         <br />
         <NewTask onSubmit ={this.handleSubmit} onInputChange={this.handleInputChange} input ={this.state.input}/>
